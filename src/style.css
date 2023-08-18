@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.drawing-box {
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(16, min(40px, 6vw, 6vh));
+  grid-template-rows: repeat(16, min(40px, 6vw, 6vh));
+}
+
+.cell {
+  border: solid 1px black;
+}
