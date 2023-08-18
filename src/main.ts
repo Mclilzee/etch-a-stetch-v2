@@ -1,7 +1,6 @@
 import frames from "./frames";
 
 const drawingBox = document.querySelector(".drawing-box") as HTMLDivElement;
-let drawInterval: number | undefined;
 let frameIndex = 0;
 
 for (let i = 0; i < 16 * 16; i++) {
