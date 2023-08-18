@@ -16,7 +16,7 @@ const cells = document.querySelectorAll(".cell") as NodeListOf<HTMLDivElement>;
 drawingBox.addEventListener("mouseover", setDrawInterval);
 
 function setDrawInterval() {
-  setTimeout(() => setInterval(drawFrames, 100), 1000);
+  setInterval(drawFrames, 100);
   drawingBox.removeEventListener("mouseover", setDrawInterval);
 }
 
