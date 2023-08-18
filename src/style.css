@@ -10,6 +10,7 @@ body {
   display: grid;
   grid-template-columns: repeat(16, min(40px, 6vw, 6vh));
   grid-template-rows: repeat(16, min(40px, 6vw, 6vh));
+  transform: rotate(90deg);
 }
 
 .cell {
