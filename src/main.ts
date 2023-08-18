@@ -14,11 +14,12 @@ for (let i = 0; i < 16 * 16; i++) {
 
 const cells = document.querySelectorAll(".cell") as NodeListOf<HTMLDivElement>;
 
-drawingBox.addEventListener("mouseover", () => {
-  if (drawInterval === undefined) {
-    drawInterval = setInterval(drawFrames, 100);
-  }
-})
+drawingBox.addEventListener("mouseover", setDrawInterval);
+
+function setDrawInterval() {
+  setTimeout(() => setInterval(drawFrames, 100), 1000);
+  drawingBox.removeEventListener("mouseover", setDrawInterval);
+}
 
 function drawFrames() {
   for (let i = 0; i < frames[frameIndex].length; i++) {
