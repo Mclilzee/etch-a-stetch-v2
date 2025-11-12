@@ -16,7 +16,7 @@ const HEIGHT = Math.floor(BOARD_HEIGHT / COLUMNS);
 
 for (let i = 0; i < ROWS; i++) {
   for (let j = 0; j < COLUMNS; j++) {
-    const x = j * WIDTH
+    const x = WIDTH * j;
     ctx.strokeRect(x, i * HEIGHT, WIDTH, HEIGHT);
   }
 }
@@ -27,7 +27,6 @@ function startAnimation() {
   canvas.removeEventListener("mouseover", startAnimation);
   requestAnimationFrame(drawFrames);
 }
-startAnimation();
 
 function drawFrames() {
   const elapsed = currentTime - start;
@@ -41,8 +40,6 @@ function drawFrames() {
 }
 
 function renderBoard(frames: Frame[]) {
-  ctx.reset();
-  let count = 0;
   for (let i = 0; i < ROWS; i++) {
     for (let j = 0; j < COLUMNS; j++) {
       const x = WIDTH * j;
@@ -53,5 +50,3 @@ function renderBoard(frames: Frame[]) {
     }
   }
 }
-
-
