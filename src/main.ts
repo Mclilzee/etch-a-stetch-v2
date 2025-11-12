@@ -1,22 +1,30 @@
-import frames from "./frames";
+import { video, Frame } from "./frames";
 
-const drawingBox = document.querySelector(".drawing-box") as HTMLDivElement;
+const canvas = document.getElementById("board-canvas") as HTMLDivElement;
+const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+
 let frameIndex = 0;
 let start = 0;
 let currentTime = 0;
-for (let i = 0; i < 16 * 16; i++) {
-  const cell = document.createElement("div");
-  cell.classList.add("cell");
-  cell.id = i.toString();
 
-  drawingBox?.appendChild(cell);
+const BOARD_WIDTH = 600;
+const BOARD_HEIGHT = 600;
+const ROWS = 16;
+const COLUMNS = 16;
+const WIDTH = Math.floor(BOARD_WIDTH / ROWS);
+const HEIGHT = Math.floor(BOARD_HEIGHT / COLUMNS);
+
+for (let i = 0; i < ROWS; i++) {
+  for (let j = 0; j < COLUMNS; j++) {
+    const x = j * WIDTH
+    ctx.strokeRect(x, i * HEIGHT, WIDTH, HEIGHT);
+  }
 }
 
-const cells = document.querySelectorAll(".cell") as NodeListOf<HTMLDivElement>;
-drawingBox.addEventListener("mouseover", startAnimation);
+canvas.addEventListener("mouseover", startAnimation);
 
 function startAnimation() {
-  drawingBox.removeEventListener("mouseover", startAnimation);
+  canvas.removeEventListener("mouseover", startAnimation);
   requestAnimationFrame(drawFrames);
 }
 
@@ -24,11 +32,25 @@ function drawFrames() {
   const elapsed = currentTime - start;
   if (elapsed > 16) {
     start = currentTime;
-    for (let i = 0; i < frames[frameIndex].length; i++) {
-      cells[i].style.backgroundColor = `rgb(${frames[frameIndex][i].r}, ${frames[frameIndex][i].g}, ${frames[frameIndex][i].b})`;
-    }
-    frameIndex = (frameIndex + 1) % frames.length;
+    renderBoard(video[frameIndex]);
+    frameIndex = (frameIndex + 1) % video.length;
   }
 
   currentTime = requestAnimationFrame(drawFrames);
 }
+
+function renderBoard(frames: Frame[]) {
+  ctx.reset();
+  let count = 0;
+  for (let i = ROWS - 1; i >= 0; i--) {
+    for (let j = 0; j < COLUMNS; j++) {
+      const x = WIDTH * i;
+      const frame = frames[i];
+      ctx.strokeRect(x, j * HEIGHT, WIDTH, HEIGHT);
+      ctx.fillStyle = `rgb(${frame.r}, ${frame.g}, ${frame.b})`;
+      ctx.fillRect(x, j * HEIGHT, WIDTH, HEIGHT);
+    }
+  }
+}
+
+
