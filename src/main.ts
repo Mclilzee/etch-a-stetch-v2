@@ -27,6 +27,7 @@ function startAnimation() {
   canvas.removeEventListener("mouseover", startAnimation);
   requestAnimationFrame(drawFrames);
 }
+startAnimation();
 
 function drawFrames() {
   const elapsed = currentTime - start;
@@ -42,13 +43,13 @@ function drawFrames() {
 function renderBoard(frames: Frame[]) {
   ctx.reset();
   let count = 0;
-  for (let i = ROWS - 1; i >= 0; i--) {
+  for (let i = 0; i < ROWS; i++) {
     for (let j = 0; j < COLUMNS; j++) {
-      const x = WIDTH * i;
-      const frame = frames[i];
-      ctx.strokeRect(x, j * HEIGHT, WIDTH, HEIGHT);
+      const x = WIDTH * j;
+      const frame = frames[i + j * COLUMNS];
+      ctx.strokeRect(x, i * HEIGHT, WIDTH, HEIGHT);
       ctx.fillStyle = `rgb(${frame.r}, ${frame.g}, ${frame.b})`;
-      ctx.fillRect(x, j * HEIGHT, WIDTH, HEIGHT);
+      ctx.fillRect(x, i * HEIGHT, WIDTH, HEIGHT);
     }
   }
 }
