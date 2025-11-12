@@ -1,6 +1,6 @@
 import { video, Frame } from "./frames";
 
-const canvas = document.getElementById("board-canvas") as HTMLDivElement;
+const canvas = document.getElementById("board-canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
 let frameIndex = 0;
