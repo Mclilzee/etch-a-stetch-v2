@@ -13,6 +13,8 @@ const ROWS = 16;
 const COLUMNS = 16;
 const WIDTH = Math.floor(BOARD_WIDTH / ROWS);
 const HEIGHT = Math.floor(BOARD_HEIGHT / COLUMNS);
+const FRAME_SPEED = 8;
+
 
 for (let i = 0; i < ROWS; i++) {
   for (let j = 0; j < COLUMNS; j++) {
@@ -30,7 +32,7 @@ function startAnimation() {
 
 function drawFrames() {
   const elapsed = currentTime - start;
-  if (elapsed > 16) {
+  if (elapsed > FRAME_SPEED) {
     start = currentTime;
     renderBoard(video[frameIndex]);
     frameIndex = (frameIndex + 1) % video.length;
