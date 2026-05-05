@@ -1,13 +1,14 @@
-FROM ubuntu:24.04
+FROM node:25-alpine3.22 AS build-env
 WORKDIR /usr/src/app
 
-RUN apt-get update && apt-get install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash
-RUN apt-get install -y nodejs
-RUN node -v && npm -v
-
 COPY . .
-RUN npm install
+RUN npm install && npm run build
 
-EXPOSE 5173
-ENTRYPOINT ["npm", "run", "dev", "--", "--host"]
+FROM busybox:1.37
+RUN adduser -D static
+USER static
+WORKDIR /home/static
+COPY --from=build-env /usr/src/app/dist .
+
+EXPOSE 8080
+CMD ["busybox", "httpd", "-f", "-v", "-p", "8080"]
